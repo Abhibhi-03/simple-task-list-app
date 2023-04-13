@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">View All Tasks</a></li>
+                <li><a href="/add-tasks">Add a Task</a></li>                
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>My Task List (My Todos)</h1>
+        <p>List of todos goes here</p>
+        
+        {{!-- this will only be displayed if msg is defined (if 
+        it is undefined, then this block will not render) --}}
+        {{#if msg}}
+            <p style="background-color:yellow;">{{ msg }}</p>
+        {{/if}}
+
+        {{!-- TODO: Handlebars syntax to display a todo --}}
+        {{#each tasks}}
+            <p>Task Name: {{this.name}}</p>
+            <p>High Priority?: {{this.isHighPriority}}</p>
+
+            {{!-- TODO: Form for deleting the task --}}
+            <form action="/delete/{{ this.id }}" method="POST">
+                <button>Delete Task</button>
+            </form>
+
+            {{!-- TODO: Form for updating the task --}}    
+            {{!-- You should use external css to style the form, i am using inline styling for simplicity         --}}
+            <form action="/update/{{ this.id }}"
+                  method="POST" 
+                style="border:1px solid #ccc; padding:10px; margin:10px;">
+                <input type="text" placeholder="Enter task name" name="taskName"/>
+                <div>
+                    <input type="radio" name="priority" value="high"/>
+                    <label>High Priority</label>
+                    <input type="radio" name="priority" value="low"/>
+                    <label>Low Priority</label>
+                </div>
+                <button>Update Task</button>
+            </form>
+
+            <hr/>
+        {{/each}}
+    </main>
+</body>
+</html>
